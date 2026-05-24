@@ -1,0 +1,125 @@
+package radix;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class main {
+
+    public static void main(String[] args) {
+
+        System.out.println("Inicializando Arrays...");
+        long startTime = System.nanoTime();
+
+        Setup setup = new Setup();
+        Radix cSort = new Radix(setup.getNumbersC());
+        Radix cMilSort = new Radix(setup.getNumbersCMil());
+        Radix cMSort = new Radix(setup.getNumbersCM());
+
+        long endTime = System.nanoTime();
+        long durationInNanos = endTime - startTime;
+        long durationInMillis = durationInNanos / 1_000_000;
+
+        getTime(durationInMillis, "Array inicializado em: ");
+
+
+        Scanner entrada = new Scanner(System.in);
+
+        while(true){
+            menu();
+            int opcao = entrada.nextInt();
+
+            if(opcao == 0)
+                break;
+
+            switch(opcao) {
+                case 1:
+                    System.out.println("Ordenando números de 1 a 100...");
+                    startTime = System.nanoTime();
+                    cSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
+
+                    getTime(durationInMillis, "Array Organizado em: ");
+
+                    break;
+                case 2:
+                    System.out.println("Ordenando números de 1 a 100.000...");
+                    startTime = System.nanoTime();
+                    cMilSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
+
+                    getTime(durationInMillis, "Array Organizado em: ");
+                    break;
+                case 3:
+                    System.out.println("Ordenando números de 1 a 100.000.000...");
+                    startTime = System.nanoTime();
+                    cMSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
+
+                    getTime(durationInMillis, "Array Organizado em: ");
+                    break;
+                case 4:
+                    System.out.println("Exibindo lista de 1 a 100...");
+                    cSort.printArr();
+                    break;
+                case 5:
+                    System.out.println("Exibindo lista de 1 a 100.000...");
+                    cMilSort.printArr();
+                    break;
+                case 6:
+                    System.out.println("Exibindo lista de 1 a 100.000.000...");
+                    cMSort.printArr();
+                    break;
+                default:
+                    System.out.println("Selecione uma opção válida...");
+                    entrada.nextLine();
+                    break;
+
+
+            }
+
+        }
+
+
+    }
+
+    private static void getTime(long duracaoMillis, String mensagem){
+        String textoDuracao = "";
+
+        if(duracaoMillis > 1000){
+            float segundos = (float)duracaoMillis / 1000;
+            textoDuracao = segundos + " segundos.";
+        }else {
+            textoDuracao = duracaoMillis + " milisegundos.";
+        }
+
+        System.out.println(mensagem + textoDuracao);
+    }
+
+    private static void clearScreen(){
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+
+    private static void menu(){
+        System.out.println("------------------ Radix Sort ------------------");
+        System.out.println("1 - Ordenar a menor lista.");
+        System.out.println("2 - Ordenar a lista média.");
+        System.out.println("3 - Ordenar a maior lista");
+        System.out.println("4 - Exibir a menor lista.");
+        System.out.println("5 - Exibir a lista média.");
+        System.out.println("6 - Exibir a maior lista.");
+        System.out.println("0 - para sair.");
+        System.out.println("Digite sua opção: ");
+    }
+
+
+
+}

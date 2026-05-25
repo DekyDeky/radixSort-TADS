@@ -21,6 +21,12 @@ public class Radix {
     }
 
     public void SortRadix(){
+
+        long inicio = System.nanoTime();
+        int intervalo = Math.max(1, this.maxVal / 10);
+
+        List<Long> amostras = new ArrayList<>();
+
         while ((this.maxVal / exp) > 0){
 
             for (int numero : numberArray){
@@ -40,6 +46,7 @@ public class Radix {
             exp *= 10;
 
         }
+
     }
 
     public void printArr(){

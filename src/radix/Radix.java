@@ -55,5 +55,19 @@ public class Radix {
         }
     }
 
+    public int getExp() {
+        return exp;
+    }
 
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int[] getNumberArray() {
+        return numberArray;
+    }
+
+    public void setNumberArray(int[] numberArray) {
+        this.numberArray = numberArray;
+    }
 }

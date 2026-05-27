@@ -1,9 +1,6 @@
 package radix;
 
 import java.util.Scanner;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class main {
 
@@ -31,88 +28,114 @@ public class main {
 
         while(true){
 
-            switch (pagina){
+            menu();
+            opcao = entrada.nextInt();
+
+            if(opcao == 0)
+                break;
+
+            switch(opcao) {
                 case 1:
-                    menu();
-                    opcao = entrada.nextInt();
+                    System.out.println("Ordenando números de 1 a 100...");
+                    startTime = System.nanoTime();
+                    cSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
 
-                    if(opcao == 0)
-                        break;
+                    getTime(durationInMillis, "Array Organizado em: ");
 
-                    switch(opcao) {
-                        case 1:
-                            System.out.println("Ordenando números de 1 a 100...");
-                            startTime = System.nanoTime();
-                            cSort.SortRadix();
-                            endTime = System.nanoTime();
-                            durationInNanos = endTime - startTime;
-                            durationInMillis = durationInNanos / 1_000_000;
-
-                            getTime(durationInMillis, "Array Organizado em: ");
-
-                            break;
-                        case 2:
-                            System.out.println("Ordenando números de 1 a 100.000...");
-                            startTime = System.nanoTime();
-                            cMilSort.SortRadix();
-                            endTime = System.nanoTime();
-                            durationInNanos = endTime - startTime;
-                            durationInMillis = durationInNanos / 1_000_000;
-
-                            getTime(durationInMillis, "Array Organizado em: ");
-                            break;
-                        case 3:
-                            System.out.println("Ordenando números de 1 a 100.000.000...");
-                            startTime = System.nanoTime();
-                            cMSort.SortRadix();
-                            endTime = System.nanoTime();
-                            durationInNanos = endTime - startTime;
-                            durationInMillis = durationInNanos / 1_000_000;
-
-                            getTime(durationInMillis, "Array Organizado em: ");
-                            break;
-                        case 4:
-                            System.out.println("Exibindo lista de 1 a 100...");
-                            cSort.printArr();
-                            break;
-                        case 5:
-                            System.out.println("Exibindo lista de 1 a 100.000...");
-                            cMilSort.printArr();
-                            break;
-                        case 6:
-                            System.out.println("Exibindo lista de 1 a 100.000.000...");
-                            cMSort.printArr();
-                            break;
-                        case 7:
-                            pagina = 2;
-                            break;
-                        default:
-                            System.out.println("Selecione uma opção válida...");
-                            entrada.nextLine();
-                            break;
-                    }
                     break;
                 case 2:
-                    menuCiclos();
-                    opcao = entrada.nextInt();
+                    System.out.println("Ordenando números de 1 a 10.000...");
+                    startTime = System.nanoTime();
+                    cMilSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
 
-                    if(opcao == 0){
-                        pagina = 1;
-                        continue;
-                    }
+                    getTime(durationInMillis, "Array Organizado em: ");
+                    break;
+                case 3:
+                    System.out.println("Ordenando números de 1 a 100.000...");
+                    startTime = System.nanoTime();
+                    cMSort.SortRadix();
+                    endTime = System.nanoTime();
+                    durationInNanos = endTime - startTime;
+                    durationInMillis = durationInNanos / 1_000_000;
 
-                    switch (opcao){
-                        case 1:
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        default:
-                            break;
+                    getTime(durationInMillis, "Array Organizado em: ");
+                    break;
+                case 4:
+                    System.out.println("Exibindo lista de 1 a 100...");
+                    cSort.printArr();
+                    break;
+                case 5:
+                    System.out.println("Exibindo lista de 1 a 10.000...");
+                    cMilSort.printArr();
+                    break;
+                case 6:
+                    System.out.println("Exibindo lista de 1 a 100.000...");
+                    cMSort.printArr();
+                    break;
+                case 7:
+                    System.out.println("Bagunçando listas...");
+                    System.out.println("Bagunçando lista de 1 a 100...");
+                    resetSort(cSort, true);
+                    System.out.println("Lista de 1 a 100 bagunçada!");
+                    System.out.println("Bagunçando listas de 1 a 10.000");
+                    resetSort(cMilSort, true);
+                    System.out.println("Lista de 1 a 10.000 bagunçada!");
+                    System.out.println("Bagunçando listas de 1 a 100.000");
+                    resetSort(cMSort, true);
+                    System.out.println("Lista de 1 a 100.000 bagunçada!");
+                    break;
+                case 8:
+                    System.out.println("Iniciando todos os testes com as seguintes listas nas seguintes ordens:");
+                    System.out.println("1. Números de 1 a 100;");
+                    System.out.println("2. Números de 1 a 10.000;");
+                    System.out.println("3. Números de 1 a 100.000;");
+
+                    Radix[] sorts = {cSort, cMilSort, cMSort};
+
+
+
+                    for(Radix sort : sorts){
+
+                        long[] tempos = new long[10];
+                        System.out.println("Começando mais um ciclo de testes...");
+                        resetSort(sort, false);
+
+                        for(int i = 0; i < 10; i++){
+                            startTime = System.nanoTime();
+                            sort.SortRadix();
+                            durationInMillis = (System.nanoTime() - startTime) / 1_000_000;
+                            tempos[i] = durationInMillis;
+                            System.out.println("Milisegundos: " + durationInMillis);
+                            System.out.println("Segundos: " + (float)durationInMillis / 1000);
+                            //getTime(durationInMillis, "Array Organizado em: ");
+                            if(i == 9){
+                                continue;
+                            }
+                            resetSort(sort, false);
+                        }
+
+                        long valorTotal = 0;
+
+                        for(long valor : tempos){
+                            valorTotal += valor;
+                        }
+
+                        System.out.println("Média do ciclo: " + (valorTotal / 10));
                     }
                     break;
+                default:
+                    System.out.println("Selecione uma opção válida...");
+                    entrada.nextLine();
+                    break;
             }
+
+
 
 
         }
@@ -133,9 +156,16 @@ public class main {
         System.out.println(mensagem + textoDuracao);
     }
 
-    private static void clearScreen(){
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
+    private static void resetSort(Radix sort, boolean getTime){
+
+        long startTime = getTime ? System.nanoTime() : 0;
+
+        sort.setNumberArray(Setup.shuffleArray(sort.getNumberArray()));
+        sort.setExp(1);
+
+        if(getTime){
+            long durationInMillis = (System.nanoTime() - startTime) / 1_000_000;
+            getTime(durationInMillis, "Array Organizado em: ");
         }
     }
 
@@ -147,18 +177,12 @@ public class main {
         System.out.println("4 - Exibir a menor lista.");
         System.out.println("5 - Exibir a lista média.");
         System.out.println("6 - Exibir a maior lista.");
+        System.out.println("7 - Desorganizar listas...");
+        System.out.println("8 - Realizar Teste Final.");
         System.out.println("0 - para sair.");
         System.out.println("Digite sua opção: ");
     }
 
-    private static void menuCiclos(){
-        System.out.println("------------------ Radix Sort ------------------");
-        System.out.println("1 - Ciclo da Menor Lista.");
-        System.out.println("2 - Ciclo da Lista Média.");
-        System.out.println("3 - Ciclo da Lista Maior");
-        System.out.println("0 - para sair.");
-        System.out.println("Digite sua opção: ");
-    }
 
 
 }

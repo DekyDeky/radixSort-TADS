@@ -4,13 +4,13 @@ import java.util.Random;
 
 public class Setup {
 
-    private final int sizeC = 100;
+    private final int sizeC = 100_000_000;
     private int[] numbersC = new int[sizeC];
 
-    private final int sizeCMil = 100_000;
+    private final int sizeCMil = 10_000;
     private int[] numbersCMil = new int[sizeCMil];
 
-    private final int sizeCM = 100_000_000;
+    private final int sizeCM = 100_000;
     private int[] numbersCM = new int[sizeCM];
 
     public Setup() {
@@ -32,7 +32,7 @@ public class Setup {
         }
     }
 
-    public static void shuffleArray(int[] array) {
+    public static int[] shuffleArray(int[] array) {
         Random rand = new Random();
 
         for (int i = array.length - 1; i > 0; i--) {
@@ -44,6 +44,8 @@ public class Setup {
             array[i] = array[j];
             array[j] = temp;
         }
+
+        return array;
     }
 
     public int[] getNumbersC() {
